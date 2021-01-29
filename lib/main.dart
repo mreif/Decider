@@ -54,7 +54,7 @@ class _DecisionMakerState extends State<DecisionMaker> {
       setState(() {
         _bgColor = circles[winner].color;
       });
-      Timer(Duration(seconds: 6),restoreBackground);
+      Timer(Duration(seconds: 4),restoreBackground);
     }
   }
 
@@ -72,9 +72,8 @@ class _DecisionMakerState extends State<DecisionMaker> {
       if(_timer != null && _timer.isActive) {
         _timer.cancel();
       }
-        _timer = Timer(Duration(seconds: 4), () => handleTimeout(numCircles));
+        _timer = Timer(Duration(seconds: 2, milliseconds: 500), () => handleTimeout(numCircles));
     }
-    // TODO if(circles > 1 && they stay the same for a second or so) start procedure
   }
 
   void touchMoved(Circle c) {
