@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class Circle {
 
- static final double RADIUS = 45;
+ static final double RADIUS = 50;
 
   final int id;
   final Color color;
@@ -15,8 +15,8 @@ class Circle {
   Circle(this.id, this.offset, this.color) {
     this.style = Paint()
       ..color = color
-      ..strokeWidth = 20
-      ..style = PaintingStyle.stroke;
+      //..strokeWidth = 20
+      ..style = PaintingStyle.fill;
   }
 
   void setOffset(Offset offset) {

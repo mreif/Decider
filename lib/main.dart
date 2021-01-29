@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:ffi';
+import 'dart:math';
+
 import 'package:decision_maker/draw/circle.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -36,12 +40,40 @@ class DecisionMaker extends StatefulWidget {
 class _DecisionMakerState extends State<DecisionMaker> {
   int circleId = 0;
   List<Circle> circles = [];
+  Color _bgColor = Colors.grey;
 
   ColorChooser _chooser = ColorChooser();
+  Timer _timer;
+
+
+  void handleTimeout(int numCircles) {
+    var cNum = circles.length;
+    if(cNum == numCircles) {
+      var rng = new Random();
+      var winner = rng.nextInt(cNum);
+      setState(() {
+        _bgColor = circles[winner].color;
+      });
+      Timer(Duration(seconds: 6),restoreBackground);
+    }
+  }
+
+  void restoreBackground() {
+    setState(() {
+      _bgColor = Colors.grey;
+    });
+  }
 
   void touchBegan(Circle c) {
     circles.add(c);
 
+    var numCircles = circles.length;
+    if(numCircles > 1) {
+      if(_timer != null && _timer.isActive) {
+        _timer.cancel();
+      }
+        _timer = Timer(Duration(seconds: 4), () => handleTimeout(numCircles));
+    }
     // TODO if(circles > 1 && they stay the same for a second or so) start procedure
   }
 
@@ -62,9 +94,8 @@ class _DecisionMakerState extends State<DecisionMaker> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-        backgroundColor: Colors.grey,
+        backgroundColor: _bgColor,
         body: RawGestureDetector(
         child: CustomPaint(
           size: Size.infinite,
