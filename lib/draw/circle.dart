@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class Circle {
 
- static final double RADIUS = 50;
+ static final double RADIUS = 60;
 
   final int id;
   final Color color;
